@@ -1,0 +1,30 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.coverage
+.pytest_cache/
+
+# spec/build metadata — never committed
+SPEC*.md
+*EXTREME*.md
+PROMPT*.md
+REVIEW*.md
+FIX_PROMPT*
+SELFREVIEW*
+DRAFT*
+REPORT.md
+INTERFACES.md
+STATUS*
+BUILD_PROMPT.md
+*.done
+*.reported
+
+# local run artifacts
+*.sock
+*.lock
+state.sqlite*
+profiles/
+ghostsession-local/
+tests/fixtures.generated.json

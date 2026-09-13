@@ -1,0 +1,39 @@
+{
+  "name": "@latticeag/ghostsession",
+  "version": "1.0.0",
+  "description": "GhostSession v1 — encrypted per-site browser session persistence, deterministic block detection, bounded recovery, human-login handoff, and hash-chained session receipts.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "bin": {
+    "ghostsession": "dist/src/main.js"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./client": {
+      "types": "./dist/src/client.d.ts",
+      "import": "./dist/src/client.js"
+    }
+  },
+  "files": [
+    "dist/src",
+    "worker/dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('tests/fixtures.json','dist/tests/fixtures.json')\"",
+    "test": "npm run build && node --test \"dist/tests/*.test.js\"",
+    "test:python": "python3 -m pytest python/tests -q",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,17 @@
+name = "ghostsession-relay"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# R2 bucket binding — opaque signed heads + nonce markers only.
+# The bucket NEVER contains keys, plaintext cookies, or account identity.
+# [[r2_buckets]]
+# binding = "VAULT_BUCKET"
+# bucket_name = "ghostsession-heads"
+
+# Provisioned via `wrangler secret put` / env:
+#   DEVICE_ID          — pinned gd_… device this relay serves
+#   TRUSTED_KEYS_JSON  — [{key_id, public_key, purpose, actor_id, device_id}]
+#   RESPONSE_KEY_ID    — worker response-proof key id (relay purpose)
+#   RESPONSE_SEED_B64  — worker response-proof Ed25519 seed (secret)
+#   TUNNEL_URL         — private outbound tunnel route to the desktop daemon
+#   TUNNEL_TOKEN       — tunnel bearer (secret)

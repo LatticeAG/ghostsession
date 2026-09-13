@@ -1,0 +1,608 @@
+{
+  "audit7": [
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "session.created",
+        "fence": 0,
+        "from_state": "NEEDS_LOGIN",
+        "generation": 0,
+        "operation_id": null,
+        "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "receipt_id": "gv_000000000000000000001",
+        "recorded_ms": 1800000000000,
+        "revision": 1,
+        "seq": 1,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "NEEDS_LOGIN",
+        "v": 1
+      },
+      "hash": "9c3ff6397bede4b5b559335513a6ec024b2e36d5e64dccaa167f32576e697e65",
+      "signature": "vzK2uxYoAZHG7Fe_3bgk0sIincr31RafoNOdD9AdPwd6txif_w-GlMiPpj-rEyx3vURdwsdhRjFpzYBzrG2QAA"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "handoff.created",
+        "fence": 0,
+        "from_state": "NEEDS_LOGIN",
+        "generation": 0,
+        "operation_id": null,
+        "previous_hash": "9c3ff6397bede4b5b559335513a6ec024b2e36d5e64dccaa167f32576e697e65",
+        "receipt_id": "gv_000000000000000000002",
+        "recorded_ms": 1800000000000,
+        "revision": 2,
+        "seq": 2,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "HANDOFF_WAIT",
+        "v": 1
+      },
+      "hash": "960050af305496367233886f2cacf6f4061eef972143bec41375077520c26272",
+      "signature": "S-Bp5ggUWzWzCroA-K2bgq3GMHLS5EIJXiK2Z0gCbAUicMP0S1pI7iYaq96W2u2ekpXuSP3jt_1JqGMbeSnpCw"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "handoff.opened",
+        "fence": 0,
+        "from_state": "HANDOFF_WAIT",
+        "generation": 0,
+        "operation_id": null,
+        "previous_hash": "960050af305496367233886f2cacf6f4061eef972143bec41375077520c26272",
+        "receipt_id": "gv_000000000000000000003",
+        "recorded_ms": 1800000000000,
+        "revision": 3,
+        "seq": 3,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "HANDOFF_WAIT",
+        "v": 1
+      },
+      "hash": "e299d7ad528bdca6443a08fc18424300f4a8cab20d573dd4f2df1d03b18c5081",
+      "signature": "cynDgF_ST_3QvWaJChEXTJhIpxSXNs-UMHJ-EJZhsk6aRt7ljYqir342OK_i81VVQnASiCVc85iitQA2BwV0Bw"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "handoff.verifying",
+        "fence": 0,
+        "from_state": "HANDOFF_WAIT",
+        "generation": 0,
+        "operation_id": null,
+        "previous_hash": "e299d7ad528bdca6443a08fc18424300f4a8cab20d573dd4f2df1d03b18c5081",
+        "receipt_id": "gv_000000000000000000004",
+        "recorded_ms": 1800000000000,
+        "revision": 4,
+        "seq": 4,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "VERIFYING",
+        "v": 1
+      },
+      "hash": "e0af4ff61602829f4a64e5ee6a81ab277e7c00438f83c718d0eaaaedf7f18744",
+      "signature": "YEfB_Bc_vJI45WmVhFAg_074AG10lc2mwNDmRa7ZLeF0dHshzmLTcKkn9qzRqfgn8lrhuj7jvGJkXu_veUggCg"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "snapshot.intent",
+        "fence": 0,
+        "from_state": "VERIFYING",
+        "generation": 0,
+        "operation_id": null,
+        "previous_hash": "e0af4ff61602829f4a64e5ee6a81ab277e7c00438f83c718d0eaaaedf7f18744",
+        "receipt_id": "gv_000000000000000000005",
+        "recorded_ms": 1800000000000,
+        "revision": 5,
+        "seq": 5,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "VERIFYING",
+        "v": 1
+      },
+      "hash": "11509f67e7fd7dc8cb14c7b69ac5c7d513816ab715d313b611bf4b728aeccc9d",
+      "signature": "wPwCwaxBIUiyWZWEdN4AuqgfYab3I2nTwb-o2hZ4JJcFrDEuRcX-xtudNUg-24Iq6BMi707x0ttx9ow-94pTAA"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": "bb1da5616ef8925e31c197decb9fdf4a6959c13bf2830a89c7c88a2db63d3926",
+        "code": "OK",
+        "event": "snapshot.committed",
+        "fence": 0,
+        "from_state": "VERIFYING",
+        "generation": 1,
+        "operation_id": null,
+        "previous_hash": "11509f67e7fd7dc8cb14c7b69ac5c7d513816ab715d313b611bf4b728aeccc9d",
+        "receipt_id": "gv_000000000000000000006",
+        "recorded_ms": 1800000000000,
+        "revision": 6,
+        "seq": 6,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "VERIFYING",
+        "v": 1
+      },
+      "hash": "0c27269b23859335c8a4d599ba6d9363db078b47a974552337fe3aa7ae7330df",
+      "signature": "3XXfhuPhjCojEBjLBwAE3fNgwf46LumQ6lOxehc0AyNH9oxDap_BkRSEF1fUFfi7E8TV8uUf_LhkQUiIcTFzBA"
+    },
+    {
+      "core": {
+        "action_binding": null,
+        "actor_id": "ga_000000000000000000001",
+        "block_class": "NONE",
+        "cipher_hash": null,
+        "code": "OK",
+        "event": "handoff.completed",
+        "fence": 0,
+        "from_state": "VERIFYING",
+        "generation": 1,
+        "operation_id": null,
+        "previous_hash": "0c27269b23859335c8a4d599ba6d9363db078b47a974552337fe3aa7ae7330df",
+        "receipt_id": "gv_000000000000000000007",
+        "recorded_ms": 1800000000000,
+        "revision": 7,
+        "seq": 7,
+        "session_id": "gs_000000000000000000001",
+        "signing_key_id": "gk_000000000000000000001",
+        "to_state": "DETACHED",
+        "v": 1
+      },
+      "hash": "c813ec17732700cbe9f547e71c37a1cb030d43982e6882ef7496dab3ddd80a6a",
+      "signature": "uTl8nmHdoR1GyzSiv5ZQqidUSttcRaM7og-nJBM9d8boevOFmH0c6dvt5BhLABgT7TCFPZizGcYzcnbcZChECQ"
+    }
+  ],
+  "base_obs": {
+    "cf_mitigated": false,
+    "challenge_marker": false,
+    "identity": "not_checked",
+    "logged_in_marker": false,
+    "login_marker": false,
+    "network": "ok",
+    "received_ms": 1800000000000,
+    "redirected_to_login": false,
+    "retry_after": null,
+    "status": 200
+  },
+  "block1": {
+    "attempt": 1,
+    "class": "RATE_LIMIT",
+    "fallback_used": false,
+    "observation": {
+      "cf_mitigated": false,
+      "challenge_marker": false,
+      "identity": "not_checked",
+      "login_marker": false,
+      "network": "ok",
+      "received_ms": 1799999970000,
+      "redirected_to_login": false,
+      "retry_after": null,
+      "status": 429
+    },
+    "retry_at_ms": 1800000000000,
+    "revision": 9
+  },
+  "card": {
+    "attempts": 0,
+    "created_ms": 1800000000000,
+    "expires_ms": 1800000900000,
+    "handoff_id": "gh_000000000000000000001",
+    "owner_id": "ga_000000000000000000001",
+    "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+    "presentation": "local_browser_only",
+    "reason": "INITIAL_LOGIN",
+    "session_id": "gs_000000000000000000001",
+    "session_revision": 2,
+    "state": "PENDING"
+  },
+  "cipher_header": {
+    "created_ms": 1800000000000,
+    "device_id": "gd_000000000000000000001",
+    "expires_ms": 1800604800000,
+    "format": "chromium-storage-v1",
+    "generation": 1,
+    "key_id": "ge_000000000000000000001",
+    "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+    "session_id": "gs_000000000000000000001",
+    "site_id": "gt_000000000000000000001",
+    "v": 1
+  },
+  "cipher_snapshot": {
+    "algorithm": "A256GCM",
+    "ciphertext": "PCC3bqGMtkTlIOTjk9NaXLLjtw2WTWgZDwGBsnkKONFjIZqfmKMkoRXHSo6_4x0J3WFRuzu0lOsK8xkoK4HD38FeoE6x5hRZfTHJDYy2asoUqKgXEgonN46Y7-5CxZWvqJc2jc0kuzikR2OeahBZD9MVB9i8qFa4d85v_bLQXjqDYjD2hOfncW-EJsRPuzirWZrBDwQ9sSX-No8elKHL1MjKsjeanrobwzywif26t4Ot_voSu5tDjFXv8OtTttKAYCXllFK0susNdLSV5XHptNFOyEYNMIrBQaGq93F4v8pzEvaDxFNqUTcY0WyXK1423MyJRa0AuZUnW1dDu6xysSThwqCt6nkcW_0EJY0cRxhAicSHXJQBfvClsvTsqGU",
+    "header": {
+      "created_ms": 1800000000000,
+      "device_id": "gd_000000000000000000001",
+      "expires_ms": 1800604800000,
+      "format": "chromium-storage-v1",
+      "generation": 1,
+      "key_id": "ge_000000000000000000001",
+      "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+      "session_id": "gs_000000000000000000001",
+      "site_id": "gt_000000000000000000001",
+      "v": 1
+    },
+    "nonce": "AAECAwQFBgcICQoL"
+  },
+  "good_cookie": {
+    "expires_ms": 1800000060000,
+    "host": "app.example.test",
+    "http_only": true,
+    "name": "sid",
+    "path": "/",
+    "same_site": "Lax",
+    "secure": true,
+    "value": "fixture-only"
+  },
+  "ids": {
+    "A": "ga_000000000000000000001",
+    "D": "gd_000000000000000000001",
+    "E": "ge_000000000000000000001",
+    "H": "gh_000000000000000000001",
+    "K": "gk_000000000000000000001",
+    "L": "gl_000000000000000000001",
+    "O": "go_000000000000000000001",
+    "R": "gr_000000000000000000001",
+    "S": "gs_000000000000000000001",
+    "T": "gt_000000000000000000001",
+    "Z": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "inbox_card": {
+    "allowed_actions": [
+      "notify_local",
+      "cancel"
+    ],
+    "expires_ms": 1800000900000,
+    "external_id": "gh_000000000000000000001",
+    "origin": "https://app.example.test",
+    "owner_id": "ga_000000000000000000001",
+    "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+    "reason": "INITIAL_LOGIN",
+    "session_id": "gs_000000000000000000001",
+    "v": 1
+  },
+  "keys": {
+    "auth_pub_b64": "JUO5L_EJVRFHatyDadtt3JM2ZaEZeN2hQE7hBmypVZ0",
+    "auth_seed_b64": "QEFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaW1xdXl8",
+    "enc_key_b64": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8",
+    "relay_pub_b64": "Kay64UG8yvCyLhqU000LxzYeUm0L_hLIl5S8kyKWbdc",
+    "relay_seed_b64": "ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8",
+    "sk_pub_b64": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg",
+    "sk_seed_b64": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8",
+    "snapshot_nonce_b64": "AAECAwQFBgcICQoL"
+  },
+  "lease": {
+    "actor_id": "ga_000000000000000000001",
+    "expires_ms": 1800000045000,
+    "fence": 1,
+    "lease_id": "gl_000000000000000000001",
+    "run_id": "gr_000000000000000000001"
+  },
+  "now": 1800000000000,
+  "policy": {
+    "core": {
+      "agent_paths": [
+        "/app"
+      ],
+      "auth_probe": {
+        "account_selector": "#account",
+        "expected_account_ref": "keychain:ghostsession/account/gt_000000000000000000001",
+        "logged_in_selector": "#account",
+        "logged_out_selector": "#login",
+        "path": "/app/me"
+      },
+      "automation_authorized": true,
+      "consent_expires_ms": 1802592000000,
+      "device_id": "gd_000000000000000000001",
+      "login_origins": [],
+      "login_path": "/login",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "origin": "https://app.example.test",
+      "owner_id": "ga_000000000000000000001",
+      "persist_session_cookies": true,
+      "recovery": {
+        "challenge_base_ms": 60000,
+        "fallback_path": "/app/status",
+        "handoff_ttl_ms": 900000,
+        "max_automatic_probes": 2,
+        "max_retry_delay_ms": 900000,
+        "max_server_wait_ms": 86400000,
+        "network_base_ms": 5000,
+        "rate_base_ms": 30000
+      },
+      "resource_origins": [],
+      "revision": 1,
+      "signing_key_id": "gk_000000000000000000001",
+      "site_id": "gt_000000000000000000001",
+      "snapshot_ttl_ms": 604800000,
+      "v": 1
+    },
+    "hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+    "signature": "UQYjWnMl8UNUBkwU6UYOTED28NrYVitr__RklBCTddWl5YuA6NpRMphMmT12_AsnQEc8DSNzkPPql0Mc8VOpDw"
+  },
+  "policy_core": {
+    "agent_paths": [
+      "/app"
+    ],
+    "auth_probe": {
+      "account_selector": "#account",
+      "expected_account_ref": "keychain:ghostsession/account/gt_000000000000000000001",
+      "logged_in_selector": "#account",
+      "logged_out_selector": "#login",
+      "path": "/app/me"
+    },
+    "automation_authorized": true,
+    "consent_expires_ms": 1802592000000,
+    "device_id": "gd_000000000000000000001",
+    "login_origins": [],
+    "login_path": "/login",
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "origin": "https://app.example.test",
+    "owner_id": "ga_000000000000000000001",
+    "persist_session_cookies": true,
+    "recovery": {
+      "challenge_base_ms": 60000,
+      "fallback_path": "/app/status",
+      "handoff_ttl_ms": 900000,
+      "max_automatic_probes": 2,
+      "max_retry_delay_ms": 900000,
+      "max_server_wait_ms": 86400000,
+      "network_base_ms": 5000,
+      "rate_base_ms": 30000
+    },
+    "resource_origins": [],
+    "revision": 1,
+    "signing_key_id": "gk_000000000000000000001",
+    "site_id": "gt_000000000000000000001",
+    "snapshot_ttl_ms": 604800000,
+    "v": 1
+  },
+  "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+  "proof_q4": {
+    "core": {
+      "actor_id": "ga_000000000000000000001",
+      "body_hash": "02f5096a4889db2118188ea1faa4210cc0c7951809475d9a6f4aa74fa7c71146",
+      "device_id": "gd_000000000000000000001",
+      "expires_ms": 1800000060000,
+      "if_match": null,
+      "if_none_match": null,
+      "issued_ms": 1800000000000,
+      "key_id": "gk_000000000000000000003",
+      "method": "POST",
+      "nonce": "AAAAAAAAAAAAAAAAAAAAAQ",
+      "path": "/v1/devices/gd_000000000000000000001/rpc",
+      "v": 1
+    },
+    "signature": "lM4RNNvZcoTNeRP5Icvg85mmL44p876JikFP2XnAW7SJlOhEyQS4EY6rrUVnWYBoLQjCCaD9IUjGdpVvYcYIBQ"
+  },
+  "ready_input": {
+    "dispatched": false,
+    "fence": 7,
+    "generation": 1,
+    "lease_expires_ms": 1800000045000,
+    "lease_id": "gl_000000000000000000001",
+    "now_ms": 1800000000000,
+    "operation_id": "go_000000000000000000001",
+    "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+    "state": "ACTIVE"
+  },
+  "receipt_envelope": {
+    "core": {
+      "action_binding": null,
+      "actor_id": "ga_000000000000000000001",
+      "block_class": "NONE",
+      "cipher_hash": null,
+      "code": "OK",
+      "event": "session.created",
+      "fence": 0,
+      "from_state": "NEEDS_LOGIN",
+      "generation": 0,
+      "operation_id": null,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt_id": "gv_000000000000000000001",
+      "recorded_ms": 1800000000000,
+      "revision": 1,
+      "seq": 1,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "to_state": "NEEDS_LOGIN",
+      "v": 1
+    },
+    "hash": "9c3ff6397bede4b5b559335513a6ec024b2e36d5e64dccaa167f32576e697e65",
+    "signature": "vzK2uxYoAZHG7Fe_3bgk0sIincr31RafoNOdD9AdPwd6txif_w-GlMiPpj-rEyx3vURdwsdhRjFpzYBzrG2QAA"
+  },
+  "requests": {
+    "q4": {
+      "id": "gq_000000000000000000004",
+      "method": "session.get",
+      "params": {
+        "session_id": "gs_000000000000000000001"
+      },
+      "v": 1
+    }
+  },
+  "snapshot_plain": {
+    "audit_hash": "11509f67e7fd7dc8cb14c7b69ac5c7d513816ab715d313b611bf4b728aeccc9d",
+    "audit_seq": 5,
+    "cookies": [],
+    "expires_ms": 1800604800000,
+    "generation": 1,
+    "origins": [],
+    "saved_ms": 1800000000000,
+    "session_id": "gs_000000000000000000001",
+    "site_id": "gt_000000000000000000001",
+    "v": 1
+  },
+  "trust_file": {
+    "keys": [
+      {
+        "device_id": "gd_000000000000000000001",
+        "key_id": "gk_000000000000000000001",
+        "public_key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg",
+        "purpose": "receipt",
+        "retired_ms": null,
+        "valid_from_ms": 1800000000000
+      }
+    ],
+    "v": 1
+  },
+  "vault_head": {
+    "core": {
+      "deleted": false,
+      "device_id": "gd_000000000000000000001",
+      "generation": 1,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "snapshot": {
+        "algorithm": "A256GCM",
+        "ciphertext": "PCC3bqGMtkTlIOTjk9NaXLLjtw2WTWgZDwGBsnkKONFjIZqfmKMkoRXHSo6_4x0J3WFRuzu0lOsK8xkoK4HD38FeoE6x5hRZfTHJDYy2asoUqKgXEgonN46Y7-5CxZWvqJc2jc0kuzikR2OeahBZD9MVB9i8qFa4d85v_bLQXjqDYjD2hOfncW-EJsRPuzirWZrBDwQ9sSX-No8elKHL1MjKsjeanrobwzywif26t4Ot_voSu5tDjFXv8OtTttKAYCXllFK0susNdLSV5XHptNFOyEYNMIrBQaGq93F4v8pzEvaDxFNqUTcY0WyXK1423MyJRa0AuZUnW1dDu6xysSThwqCt6nkcW_0EJY0cRxhAicSHXJQBfvClsvTsqGU",
+        "header": {
+          "created_ms": 1800000000000,
+          "device_id": "gd_000000000000000000001",
+          "expires_ms": 1800604800000,
+          "format": "chromium-storage-v1",
+          "generation": 1,
+          "key_id": "ge_000000000000000000001",
+          "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+          "session_id": "gs_000000000000000000001",
+          "site_id": "gt_000000000000000000001",
+          "v": 1
+        },
+        "nonce": "AAECAwQFBgcICQoL"
+      },
+      "v": 1
+    },
+    "hash": "3b0775a0ce35bfaa0b52aa39e71c93f05f1ec687d3f6bf17dc003830e74faeaa",
+    "signature": "VrMtia5COit2Qknak-T8UgKGqUvTHNv1nPUgNgIK3PJ4u4YWga9q8AaYWvhxGEwtm6bl00DdiUEyzkjNOku2Ag"
+  },
+  "vg2": {
+    "core": {
+      "deleted": false,
+      "device_id": "gd_000000000000000000001",
+      "generation": 2,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "snapshot": {
+        "algorithm": "A256GCM",
+        "ciphertext": "slNPCNAiro7RbE95VXvJvbciBemInzjKuRs2DRW4Y-eGEs2sEQMe3Xio11OlB6-TST8gL8HihRTEuLARIwFB27okMuWRLsQYGkr1GTVEs-QQzitm2EYmBpZfXJB8J42DpGHydJU7aY2qXFoionbIJXMZBdOo4PbpQKO0W4jqj_3r_F33aIZOjzdtQ59GGlc5JDMLq8OlQvJeMOfTFl5UIa640vnJEGt1bdn4NkJyU1WlFNo-s6K3SoTWgsUnQsn-H8kwsB-v61gB13Obch6_MkH2Iwe87w8gewmrAj3m72svRD7L3LGYNr_Vi81ES2S2glRxhlFF4_VaQAxznHR3_CYl7zDa4qE7-M4BlRQbx48aBulzfpyRWdK_kIaSXbs",
+        "header": {
+          "created_ms": 1800000000000,
+          "device_id": "gd_000000000000000000001",
+          "expires_ms": 1800604800000,
+          "format": "chromium-storage-v1",
+          "generation": 2,
+          "key_id": "ge_000000000000000000001",
+          "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+          "session_id": "gs_000000000000000000001",
+          "site_id": "gt_000000000000000000001",
+          "v": 1
+        },
+        "nonce": "AAAAAAAAAAAAAAAC"
+      },
+      "v": 1
+    },
+    "hash": "a033e9221cdf90e46105a7f788637443fbd1f64562b3dde24a462b351d169647",
+    "signature": "28rsZj1Uu3bf-3cWuQZKlH8up3_hvxunTyyhLONtnOiAfe4UeBAQinIPyDjQutS5MU2KUI-My7WmjZ-7sR20Dg"
+  },
+  "vg3": {
+    "core": {
+      "deleted": false,
+      "device_id": "gd_000000000000000000001",
+      "generation": 3,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "snapshot": {
+        "algorithm": "A256GCM",
+        "ciphertext": "dgZvxjIfxYXb8-QXiT9csDu2wWQhFDEqFl9DXYF3XDWPH15gi1Se_KSLBr_ghODB9t317pJd-1Vr2ACVDv6g_Rxw0rmsxHcw0o6WdIfFMJzdQvBg5YDcsAZym72BpFn3E3VDs9dMH1ucJxB9LWSjxof5qzAbsuVHtkTBjvbuC47XSFzggjyVZLyD-MY7amDdQzOxsU87K1hd_WnMA-wY7NHCemBydrR8GRROkxBylyUOq2YsKOIyIxf9SkoQqPn6qkIbH6vBauX84zvrklnJphhkRe5RQ5fxPSAYnLgdyYWBF442eckdqisY6oZMOA2Us_zDaVPH3beBmUZemCPkMVAlFzuByT0ddulq3tFmgNMtSQ861vWzc2eEFHjDrq4",
+        "header": {
+          "created_ms": 1800000000000,
+          "device_id": "gd_000000000000000000001",
+          "expires_ms": 1800604800000,
+          "format": "chromium-storage-v1",
+          "generation": 3,
+          "key_id": "ge_000000000000000000001",
+          "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+          "session_id": "gs_000000000000000000001",
+          "site_id": "gt_000000000000000000001",
+          "v": 1
+        },
+        "nonce": "AAAAAAAAAAAAAAAD"
+      },
+      "v": 1
+    },
+    "hash": "4076ada9db43b9528bb6b302c86a17a600dbab66f8820d1a5bf9c177f43ff380",
+    "signature": "cV3qarXVJtWIRyS7ttkbjWvE5MbTF-ZRrOFw8YFrFC7JGH_lBCd5Idv246VcirQ98xFq0XIn-NYGK4ixx8WJBg"
+  },
+  "vg4_tombstone": {
+    "core": {
+      "deleted": true,
+      "device_id": "gd_000000000000000000001",
+      "generation": 4,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "snapshot": null,
+      "v": 1
+    },
+    "hash": "8025956891ed07bc000f7f5ce485b3c1aab4c7299b09900be493f7029f42b7c6",
+    "signature": "G4qb6eXINplA9u7or4ew6R_o-Du-Ob-B0ftvSnzGcC8O8CdziU0A341RmyPF11u4ByC-R5wkM1OnZTvq1dmWAw"
+  },
+  "vg5": {
+    "core": {
+      "deleted": false,
+      "device_id": "gd_000000000000000000001",
+      "generation": 5,
+      "session_id": "gs_000000000000000000001",
+      "signing_key_id": "gk_000000000000000000001",
+      "snapshot": {
+        "algorithm": "A256GCM",
+        "ciphertext": "44OjF6fX4RIAMzqZZ8130yoxF88XTQMIH7kJFWLcYtnRuzUs9W9W2di_aEbRd0bcuA83avcm1vfxG0p22-W4EWmDIEWkKCGEi2qHvF-SP3D5ttMFrVb-2-LmuoEjwPwSH-yih9B86B2XcASS-HVxG7B9h1km3QwDSbsxNUCrJkbJ_MpkzUcYrKj__3EPnVmgn6kp4ZJpHGqnEKAuJnBLLTGpQxwaRH5fRn5IgAazur7H2m1ZwAC-psXblPviTI43FTQ3vWKp39yOObYCM_sxBdDez5DMgZbNKjdnKTFlThHieZxa8_T9DvRE5RYEFt35jmyiBpdNeQAKBFOYUXMzifhx60ZCh0gin5jA1WqK3g9ErEYeLbOC3LnuA4rrMT0",
+        "header": {
+          "created_ms": 1800000000000,
+          "device_id": "gd_000000000000000000001",
+          "expires_ms": 1800604800000,
+          "format": "chromium-storage-v1",
+          "generation": 5,
+          "key_id": "ge_000000000000000000001",
+          "policy_hash": "f9a0157592d5cb6004c4666e917a7d680f889cc2e88985ce908cfd39c4ff0e8e",
+          "session_id": "gs_000000000000000000001",
+          "site_id": "gt_000000000000000000001",
+          "v": 1
+        },
+        "nonce": "AAAAAAAAAAAAAAAF"
+      },
+      "v": 1
+    },
+    "hash": "0dafde780d39e1925e599f702a44be622aee268c6da7a1b16d0c6fc06819f570",
+    "signature": "HKH-dZfQOCJHZVut4JWcp1sj7-DM7sGooU3F9XbAQzOjVx74nUeGNX0ezk6EWYWBf4chu_8bKPgo3xwueHjgDg"
+  }
+}
