@@ -22,6 +22,56 @@ second vault or implement another browser driver.
 > browser window owned by the device owner; the agent observes only
 > allowlisted probe selectors.
 
+## Requirements
+
+- **Node.js >= 22.5** for the daemon and CLI (`node:sqlite`, zero deps).
+- **Chromium** on PATH (or `GHOSTSESSION_CHROMIUM=/path/to/chromium`) for
+  anything that drives a browser — `session attach`, `session recover`,
+  `session step`, `inbox open`/`inbox resolve`. It is not needed for
+  `init`, `site enroll`, `session create`, `audit export`, or
+  `audit verify`. `ghostsession doctor` reports a `browser_binary` check;
+  when it fails, browser RPCs return `BROWSER_UNAVAILABLE` (HTTP 423, exit
+  6) — the daemon does not crash.
+- **An OS keychain**: macOS Keychain or Linux Secret Service
+  (`secret-tool` + a D-Bus session bus). Headless Linux has neither — set
+  `GHOSTSESSION_INSECURE_FILE_KEYCHAIN=1` to fall back to owner-only files
+  under `data_dir/keychain` (0600 files in a 0700 dir). This is a dev/test
+  escape hatch only; without it, `init`/`enroll`/`daemon start` fail
+  `SECURE_STORAGE_UNAVAILABLE`.
+- **A controlling TTY for owner confirmation.** `site enroll` (masked
+  account-text prompt), `session revoke`, and `session delete` (typed
+  confirmations) refuse non-TTY stdin with exit 3 — there are no `--yes`
+  overrides by design. Headless use needs a PTY, e.g.
+  `script -qec 'ghostsession site enroll …' /dev/null` or `ssh -t`.
+
+Conventions the CLI and RPC layer enforce:
+
+- **IDs** are `<prefix>_` + exactly 21 chars from
+  `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-`.
+  Prefixes: `gs` session, `gt` site, `gd` device, `ga` actor, `gr` run,
+  `gl` lease, `go` operation, `gh` handoff, `gv` receipt, `gk` key, `ge`
+  encryption key, `gq` request.
+- **`session step --action-file`** must be owner-private (`chmod 0600`) or
+  the CLI rejects it before dispatch.
+- **`site enroll`** validates the policy file before signing:
+  `auth_probe.expected_account_ref` must be exactly
+  `keychain:ghostsession/account/<site_id>` (and `--account-ref` must match
+  it), and `recovery` must equal the fixed policy constants:
+
+  | field | value |
+  |-------|-------|
+  | `challenge_base_ms` | `60000` |
+  | `rate_base_ms` | `30000` |
+  | `network_base_ms` | `5000` |
+  | `max_retry_delay_ms` | `900000` |
+  | `max_server_wait_ms` | `86400000` |
+  | `max_automatic_probes` | `2` |
+  | `handoff_ttl_ms` | `900000` |
+
+  `snapshot_ttl_ms` must be within `3600000..2592000000`, probe/fallback
+  paths must stay inside `agent_paths`, and `methods` must include `GET`
+  and `HEAD`.
+
 ## What it does
 
 - **Encrypted snapshots** — AES-256-GCM `chromium-storage-v1` capture,
@@ -47,16 +97,18 @@ second vault or implement another browser driver.
 npm install -g @latticeag/ghostsession   # or: npm ci && npm run build
 ghostsession init --device-label laptop
 ghostsession daemon start --foreground
-ghostsession site enroll --policy policy.json --account-ref ghostsession/account/gt_...
+ghostsession site enroll --policy policy.json --account-ref keychain:ghostsession/account/gt_...
 ghostsession session create --site gt_... --json
 ghostsession inbox open gh_... && ghostsession inbox resolve gh_... --ready
 ghostsession session attach gs_... --run gr_... --generation 1 --json
 ghostsession session step gs_... --lease gl_... --fence 1 --operation go_... --action-file action.json
 ghostsession session detach gs_... --lease gl_... --fence 1 --checkpoint --json
-ghostsession audit export gs_... | ghostsession audit verify --trust trust.json
+ghostsession audit export gs_... > receipts.jsonl
+ghostsession audit verify --input receipts.jsonl --trust trust.json
 ```
 
-Python client:
+Python client — requires **Python >= 3.11** and `cryptography>=41`
+(`pip install ghostsession`, or `uv run --with ghostsession python`):
 
 ```python
 from ghostsession import Client
@@ -80,7 +132,14 @@ view = client.call("session.get", {"session_id": "gs_..."},
 ```sh
 npm run check          # typecheck
 npm test               # build + TS conformance suite (57 tests)
-npm run test:python    # Python contract suite (21 tests)
+npm run test:python    # Python contract suite (21 tests; needs python >=3.11)
+```
+
+If the system `python3` is older than 3.11 or has no pytest, let
+[uv](https://docs.astral.sh/uv/) provision one:
+
+```sh
+uv run --python 3.12 --with pytest --with . python -m pytest python/tests -q
 ```
 
 ## License

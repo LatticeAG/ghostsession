@@ -136,6 +136,7 @@ function errorExitCode(code: ErrorCode): number {
     case "INTEGRITY_FAILED":
     case "KEY_UNAVAILABLE":
     case "SECURE_STORAGE_UNAVAILABLE":
+    case "BROWSER_UNAVAILABLE":
     case "AUDIT_UNAVAILABLE": return 6;
     case "DEVICE_OFFLINE":
     case "TIMEOUT": return 7;
@@ -150,6 +151,14 @@ function errorExitCode(code: ErrorCode): number {
     default: return 1;
   }
 }
+
+/** Actionable hint printed after the bare error code for known env gaps. */
+const ERROR_HINTS: Partial<Record<ErrorCode, string>> = {
+  BROWSER_UNAVAILABLE:
+    "browser binary unavailable — install chromium or set GHOSTSESSION_CHROMIUM=/path/to/chromium",
+  SECURE_STORAGE_UNAVAILABLE:
+    "no OS keychain available — on headless Linux set GHOSTSESSION_INSECURE_FILE_KEYCHAIN=1 (dev/test only)",
+};
 
 export async function runCli(argv: string[]): Promise<number> {
   let args: Args;
@@ -185,11 +194,15 @@ export async function runCli(argv: string[]): Promise<number> {
     }
     if (e instanceof RpcError) {
       process.stderr.write(`${e.code}\n`);
+      const hint = ERROR_HINTS[e.code];
+      if (hint) process.stderr.write(`${hint}\n`);
       return errorExitCode(e.code);
     }
     const f = e as { code?: string };
     if (f && typeof f.code === "string" && f.code.length > 2) {
       process.stderr.write(`${f.code}\n`);
+      const hint = ERROR_HINTS[f.code as ErrorCode];
+      if (hint) process.stderr.write(`${hint}\n`);
       return errorExitCode(f.code as ErrorCode);
     }
     process.stderr.write(`INTERNAL\n`);
