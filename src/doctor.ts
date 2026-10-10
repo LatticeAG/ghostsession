@@ -5,6 +5,7 @@
 import { existsSync, statSync } from "node:fs";
 import { loadConfig, loadDevice } from "./config.js";
 import { platformKeychain, SecretServiceKeychain, MacosKeychain } from "./store/keychain.js";
+import { resolveBrowserPath } from "./browser/cdp.js";
 import { Store } from "./store/database.js";
 import { jcsString } from "./encoding/jcs.js";
 
@@ -56,6 +57,16 @@ export function runDoctor(ctx: Ctx): number {
     }
   } catch (e) {
     check("keychain", false, e instanceof Error ? e.message : "unavailable");
+  }
+
+  // Browser binary (CDP adapter only; the scripted test adapter needs none).
+  if (process.env.GHOSTSESSION_TEST_ADAPTER === "scripted") {
+    check("browser_binary", true, "scripted adapter (test)");
+  } else {
+    const chromiumPath = process.env.GHOSTSESSION_CHROMIUM ?? "chromium";
+    const resolved = resolveBrowserPath(chromiumPath);
+    check("browser_binary", resolved !== null,
+      resolved ?? "not found — install chromium or set GHOSTSESSION_CHROMIUM");
   }
 
   // SQLite integrity.

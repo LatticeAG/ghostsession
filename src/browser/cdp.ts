@@ -90,6 +90,22 @@ export interface CdpOptions {
   originOpts?: OriginOptions;
 }
 
+/**
+ * Resolve the browser binary: a bare name is looked up on PATH, a path is
+ * checked directly. Returns the resolved path or null when unavailable.
+ */
+export function resolveBrowserPath(chromiumPath: string): string | null {
+  if (chromiumPath.includes("/")) {
+    return existsSync(chromiumPath) ? chromiumPath : null;
+  }
+  const pathEnv = process.env.PATH ?? "/usr/bin:/bin";
+  for (const dir of pathEnv.split(":")) {
+    const p = join(dir, chromiumPath);
+    if (existsSync(p)) return p;
+  }
+  return null;
+}
+
 export class CdpAdapter implements BrowserAdapter {
   private opts: Required<CdpOptions>;
   private proc: ChildProcess | null = null;
@@ -114,30 +130,73 @@ export class CdpAdapter implements BrowserAdapter {
 
   private async ensureBrowser(): Promise<void> {
     if (this.ws) return;
+    // Dependency check first: a missing browser must surface as
+    // BROWSER_UNAVAILABLE, never as an ENOENT crash or a bare INTERNAL.
+    const binary = resolveBrowserPath(this.opts.chromiumPath);
+    if (binary === null) {
+      throw new RpcError("BROWSER_UNAVAILABLE", {
+        cause: `browser binary not found: ${this.opts.chromiumPath} ` +
+          "(install chromium or set GHOSTSESSION_CHROMIUM)",
+      });
+    }
     const dir = mkdtempSync(join(tmpdir(), "gs-chrome-"));
-    this.proc = spawn(this.opts.chromiumPath, [
+    const proc = spawn(binary, [
       "--headless=new", "--remote-debugging-port=0", "--no-first-run",
       "--no-default-browser-check", `--user-data-dir=${dir}`,
       "--disable-features=WebRtcHideLocalIpsWithMdns",
       "--disable-webrtc", "--disable-quic",
       "about:blank",
     ], { stdio: ["ignore", "ignore", "pipe"] });
-    // Read the chosen port from DevToolsActivePort.
+    this.proc = proc;
+    // An unhandled 'error'/'exit' on the child kills the daemon; race the
+    // DevTools port poll against them so launch failures stay typed errors.
+    const launchFailed = new Promise<never>((_, reject) => {
+      proc.once("error", (e) => {
+        reject(new RpcError("BROWSER_UNAVAILABLE", {
+          cause: `failed to launch browser at ${binary}: ${e.message}`,
+        }));
+      });
+      proc.once("exit", (code, signal) => {
+        reject(new RpcError("BROWSER_UNAVAILABLE", {
+          cause: `browser exited before DevTools was ready ` +
+            `(code ${String(code)}, signal ${String(signal)})`,
+        }));
+      });
+    });
+    // Attach a sink now so a late rejection after a successful launch is not
+    // reported as an unhandled rejection.
+    launchFailed.catch(() => {});
     const deadline = Date.now() + this.opts.launchTimeoutMs;
-    let port = 0;
-    while (Date.now() < deadline) {
-      const f = join(dir, "DevToolsActivePort");
-      if (existsSync(f)) {
-        port = Number(readFileSync(f, "utf8").split("\n")[0]!.trim());
-        if (port > 0) break;
+    const portReady = (async (): Promise<number> => {
+      while (Date.now() < deadline) {
+        const f = join(dir, "DevToolsActivePort");
+        if (existsSync(f)) {
+          const p = Number(readFileSync(f, "utf8").split("\n")[0]!.trim());
+          if (p > 0) return p;
+        }
+        await new Promise((r) => setTimeout(r, 50));
       }
-      await new Promise((r) => setTimeout(r, 50));
+      return 0;
+    })();
+    try {
+      const port = await Promise.race([portReady, launchFailed]);
+      if (!port) {
+        throw new RpcError("BROWSER_UNAVAILABLE", {
+          cause: `browser did not expose a DevTools port within ${this.opts.launchTimeoutMs}ms`,
+        });
+      }
+      this.port = port;
+      const ver = await httpJson("/json/version", port) as { webSocketDebuggerUrl: string };
+      this.ws = await wsConnect(ver.webSocketDebuggerUrl);
+      this.ws.onEvent((method, params, sessionId) => void this.onEvent(method, params, sessionId));
+    } catch (e) {
+      try { proc.kill("SIGKILL"); } catch { /* already gone */ }
+      try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
+      if (e instanceof RpcError) throw e;
+      throw new RpcError("BROWSER_UNAVAILABLE", {
+        cause: "browser DevTools handshake failed",
+      });
     }
-    if (!port) throw new RpcError("INTERNAL");
-    this.port = port;
-    const ver = await httpJson("/json/version", port) as { webSocketDebuggerUrl: string };
-    this.ws = await wsConnect(ver.webSocketDebuggerUrl);
-    this.ws.onEvent((method, params, sessionId) => void this.onEvent(method, params, sessionId));
   }
 
   private pendingPauses = new Map<string, { url: string; sessionId: string }>();

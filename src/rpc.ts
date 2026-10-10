@@ -90,6 +90,7 @@ export function statusFor(code: ErrorCode): number {
     case "BODY_TOO_LARGE": return 413;
     case "KEY_UNAVAILABLE":
     case "SECURE_STORAGE_UNAVAILABLE":
+    case "BROWSER_UNAVAILABLE":
     case "AUDIT_UNAVAILABLE":
     case "CLOCK_UNSAFE":
     case "COOLDOWN_ACTIVE": return 423;

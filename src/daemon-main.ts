@@ -10,7 +10,7 @@ import { Store } from "./store/database.js";
 import { Engine, systemClock } from "./engine.js";
 import { Dispatcher } from "./rpc.js";
 import { Daemon } from "./daemon.js";
-import { CdpAdapter } from "./browser/cdp.js";
+import { CdpAdapter, resolveBrowserPath } from "./browser/cdp.js";
 import { ScriptedAdapter } from "./browser/scripted.js";
 import { HttpsVaultTransport } from "./vault.js";
 import { jcsString } from "./encoding/jcs.js";
@@ -33,6 +33,14 @@ export async function startDaemonProcess(ctx: Ctx, foreground: boolean): Promise
   const adapter = process.env.GHOSTSESSION_TEST_ADAPTER === "scripted"
     ? new ScriptedAdapter(JSON.parse(process.env.GHOSTSESSION_TEST_SCRIPT ?? "{}"))
     : new CdpAdapter({ maxContexts: cfg.browser.max_contexts });
+  if (adapter instanceof CdpAdapter &&
+    resolveBrowserPath(process.env.GHOSTSESSION_CHROMIUM ?? "chromium") === null) {
+    // Non-fatal: non-browser RPCs still serve; browser work fails typed.
+    process.stderr.write(
+      "warning: chromium not found — browser operations will fail " +
+      "BROWSER_UNAVAILABLE (install chromium or set GHOSTSESSION_CHROMIUM)\n",
+    );
+  }
   const engine = new Engine({
     store, keychain, adapter, clock: systemClock,
     device: {

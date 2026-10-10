@@ -189,6 +189,8 @@ export class Engine {
   private contexts = new Map<string, BrowserContextHandle>();
   /** In-flight human-context opens keyed by session (verify must await them). */
   private handoffOpenTasks = new Map<string, Promise<void>>();
+  /** Last human-context open failure per session, surfaced at resolve time. */
+  private handoffOpenErrors = new Map<string, RpcError>();
   private pending: Promise<void>[] = [];
   /** Daemon-wide gates. */
   clockUnsafe = false;
@@ -1751,7 +1753,14 @@ export class Engine {
     if (now < budget.next_allowed_ms) {
       throw new RpcError("COOLDOWN_ACTIVE", { retryAtMs: budget.next_allowed_ms, state: s.state });
     }
-    if (card.state === "OPEN") return card; // idempotent re-open, no second launch
+    if (card.state === "OPEN") {
+      // Idempotent re-open: no second launch while a context lives or an
+      // open is in flight; a failed launch retries here.
+      if (!this.contexts.has(s.id) && !this.handoffOpenTasks.has(s.id)) {
+        this.launchHumanContext(s.id, site.policy.core);
+      }
+      return card;
+    }
     const updated = this.commitAndPin([s.id], () => {
       const cur = this.loadSession(s.id)!;
       const c = this.loadCard(handoffId)!;
@@ -1763,10 +1772,14 @@ export class Engine {
       this.saveSession(cur);
       return c;
     });
-    const openTask = this.openHumanContext(s.id, site.policy.core);
-    this.handoffOpenTasks.set(s.id, openTask);
-    this.track(openTask);
+    this.launchHumanContext(s.id, site.policy.core);
     return updated;
+  }
+
+  private launchHumanContext(sessionId: string, policy: PolicyCore): void {
+    const openTask = this.openHumanContext(sessionId, policy);
+    this.handoffOpenTasks.set(sessionId, openTask);
+    this.track(openTask);
   }
 
   private async openHumanContext(sessionId: string, policy: PolicyCore): Promise<void> {
@@ -1774,7 +1787,19 @@ export class Engine {
       const ctx = await this.adapter.openContext("handoff-human", policy);
       this.contexts.set(sessionId, ctx);
       await this.adapter.openHuman(ctx, policy);
-    } catch { /* owner sees card state; context failure is retried on next open */ }
+      this.handoffOpenErrors.delete(sessionId);
+    } catch (e) {
+      // Record the failure for resolveHandoff; a missing browser dependency
+      // must surface as a typed error, never a crash.
+      this.handoffOpenErrors.set(sessionId, e instanceof RpcError ? e : new RpcError("INTERNAL"));
+      const orphan = this.contexts.get(sessionId);
+      if (orphan) {
+        this.contexts.delete(sessionId);
+        void this.adapter.destroy(orphan).catch(() => {});
+      }
+    } finally {
+      this.handoffOpenTasks.delete(sessionId);
+    }
   }
 
   resolveHandoff(handoffId: string, decision: "ready" | "cancel"): Handoff {
@@ -1817,6 +1842,14 @@ export class Engine {
     if (now < budget.next_allowed_ms) {
       throw new RpcError("COOLDOWN_ACTIVE", { retryAtMs: budget.next_allowed_ms, state: s.state });
     }
+    if (!this.contexts.has(s.id) && !this.handoffOpenTasks.has(s.id)) {
+      // The human context never opened: surface the recorded cause (e.g.
+      // BROWSER_UNAVAILABLE when chromium is absent) instead of failing the
+      // session. A lost context (daemon restart) relaunches and verifies.
+      const openErr = this.handoffOpenErrors.get(s.id);
+      if (openErr) throw openErr;
+      this.launchHumanContext(s.id, site.policy.core);
+    }
     const updated = this.commitAndPin([s.id], () => {
       const cur = this.loadSession(s.id)!;
       const c = this.loadCard(handoffId)!;
@@ -1844,7 +1877,7 @@ export class Engine {
       const s = this.loadSession(sessionId)!;
       const site = this.loadSite(s.siteId)!;
       const ctx = this.contexts.get(sessionId);
-      if (!ctx) throw new RpcError("INTERNAL");
+      if (!ctx) throw (this.handoffOpenErrors.get(sessionId) ?? new RpcError("INTERNAL"));
       const probe = await this.adapter.probe(ctx, site.policy.core);
       const expected = this.accountExpected(site.policy.core);
       const { observation } = observationFromProbe(probe, site.policy.core, expected, this.now());
