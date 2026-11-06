@@ -97,6 +97,10 @@ npm test               # build + TS conformance suite (57 tests)
 npm run test:python    # Python contract suite (21 tests)
 ```
 
+Node 22 may emit an experimental warning for `node:sqlite` during tests.
+To suppress Node warnings for a test run, use `NODE_NO_WARNINGS=1 npm test`;
+this suppresses all Node warnings, not just the SQLite warning.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
