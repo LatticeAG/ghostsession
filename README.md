@@ -43,6 +43,20 @@ second vault or implement another browser driver.
 
 ## Quickstart
 
+`init` requires an OS secure credential store. On headless Linux, install and
+configure a Secret Service provider and `secret-tool`, or explicitly opt into
+the insecure file keychain for development or CI:
+
+```sh
+export GHOSTSESSION_INSECURE_FILE_KEYCHAIN=1
+```
+
+The file keychain stores key material on disk without OS credential-store
+protection. Keep the variable set for subsequent GhostSession commands that
+need the keychain; do not use this option for production secrets.
+If you initialize with `--config PATH`, pass the same option to `doctor` and
+other commands. Both `init` and `doctor` report the config path they use.
+
 ```sh
 npm install -g @latticeag/ghostsession   # or: npm ci && npm run build
 ghostsession init --device-label laptop
@@ -82,6 +96,10 @@ npm run check          # typecheck
 npm test               # build + TS conformance suite (57 tests)
 npm run test:python    # Python contract suite (21 tests)
 ```
+
+Node 22 may emit an experimental warning for `node:sqlite` during tests.
+To suppress Node warnings for a test run, use `NODE_NO_WARNINGS=1 npm test`;
+this suppresses all Node warnings, not just the SQLite warning.
 
 ## License
 
