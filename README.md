@@ -54,6 +54,8 @@ export GHOSTSESSION_INSECURE_FILE_KEYCHAIN=1
 The file keychain stores key material on disk without OS credential-store
 protection. Keep the variable set for subsequent GhostSession commands that
 need the keychain; do not use this option for production secrets.
+If you initialize with `--config PATH`, pass the same option to `doctor` and
+other commands. Both `init` and `doctor` report the config path they use.
 
 ```sh
 npm install -g @latticeag/ghostsession   # or: npm ci && npm run build

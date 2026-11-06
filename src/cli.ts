@@ -248,7 +248,7 @@ async function dispatchCommand(args: Args, ctx: Ctx): Promise<number> {
       deviceLabel: label,
       allowFileKeychain: process.env.GHOSTSESSION_INSECURE_FILE_KEYCHAIN === "1",
     });
-    emit(ctx, result);
+    emit(ctx, { ...result, config_path: ctx.configPath });
     return 0;
   }
 

@@ -74,8 +74,8 @@ export function runDoctor(ctx: Ctx): number {
   check("clock_safe", true);
 
   const ready = failed.length === 0;
-  const out = { ready, checks_failed: failed, checks };
-  if (ctx.json) process.stdout.write(jcsString({ ready, checks_failed: failed }) + "\n");
+  const out = { ready, checks_failed: failed, config_path: ctx.configPath, checks };
+  if (ctx.json) process.stdout.write(jcsString({ ready, checks_failed: failed, config_path: ctx.configPath }) + "\n");
   else process.stdout.write(JSON.stringify(out, null, 2) + "\n");
   return ready ? 0 : 6;
 }
