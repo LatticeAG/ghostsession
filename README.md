@@ -43,6 +43,18 @@ second vault or implement another browser driver.
 
 ## Quickstart
 
+`init` requires an OS secure credential store. On headless Linux, install and
+configure a Secret Service provider and `secret-tool`, or explicitly opt into
+the insecure file keychain for development or CI:
+
+```sh
+export GHOSTSESSION_INSECURE_FILE_KEYCHAIN=1
+```
+
+The file keychain stores key material on disk without OS credential-store
+protection. Keep the variable set for subsequent GhostSession commands that
+need the keychain; do not use this option for production secrets.
+
 ```sh
 npm install -g @latticeag/ghostsession   # or: npm ci && npm run build
 ghostsession init --device-label laptop
